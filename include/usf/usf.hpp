@@ -253,8 +253,7 @@ namespace usf::internal {
 #  define USF_CONTRACT_VIOLATION(except)  usf::internal::contract_violation("Failure at " __FILE__ ", Line " USF_STRINGIFY(__LINE__))
 #endif
 
-//#define USF_ENFORCE(cond, except)  ((!!(cond)) ? static_cast<void>(0) : USF_CONTRACT_VIOLATION(except))
-#define USF_ENFORCE(cond, except)  ((!(cond)) ? static_cast<void>(0) : USF_CONTRACT_VIOLATION(except))
+#define USF_ENFORCE(cond, except)  ((!!(cond)) ? static_cast<void>(0) : USF_CONTRACT_VIOLATION(except))
 
 #endif // USF_CONFIG_HPP
 
