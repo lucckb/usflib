@@ -244,11 +244,17 @@ void throw_exception(const char* const msg)
 #  define USF_CONTRACT_VIOLATION(except)  usf::internal::throw_exception<except>("Failure at " __FILE__ ", Line " USF_STRINGIFY(__LINE__))
 #elif defined(USF_ABORT_ON_CONTRACT_VIOLATION)
 #  define USF_CONTRACT_VIOLATION(except)  std::abort()
-#else
+#elif defined(USF_TERMINATE_ON_CONTRACT_VIOLATION)
 #  define USF_CONTRACT_VIOLATION(except)  std::terminate()
+#else
+namespace usf::internal {
+    void contract_violation(const char* str);
+}
+#  define USF_CONTRACT_VIOLATION(except)  usf::internal::contract_violation("Failure at " __FILE__ ", Line " USF_STRINGIFY(__LINE__))
 #endif
 
-#define USF_ENFORCE(cond, except)  ((!!(cond)) ? static_cast<void>(0) : USF_CONTRACT_VIOLATION(except))
+//#define USF_ENFORCE(cond, except)  ((!!(cond)) ? static_cast<void>(0) : USF_CONTRACT_VIOLATION(except))
+#define USF_ENFORCE(cond, except)  ((!(cond)) ? static_cast<void>(0) : USF_CONTRACT_VIOLATION(except))
 
 #endif // USF_CONFIG_HPP
 
@@ -1478,7 +1484,7 @@ class ArgFormat
 
             if(width() <= digits)
             {
-                USF_ENFORCE(it + digits < end, std::runtime_error);
+                //USF_ENFORCE(it + digits < end, std::runtime_error);
                 write_sign(it, negative);
                 write_prefix(it);
             }
