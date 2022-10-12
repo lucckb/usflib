@@ -9,9 +9,12 @@
 
 #pragma once
 
+#if !defined(USF_DISABLE_CPP_STRING_SUPPORT)
+#include <string>
+#endif
+
 namespace usf
 {
-
 
 class StringView
 {
@@ -69,6 +72,18 @@ class StringView
             USF_ENFORCE(first <= last, std::runtime_error);
         }
 
+#if !defined(USF_DISABLE_CPP_STRING_SUPPORT)
+        StringView(const std::string& str)
+            : m_begin{str.data()}, m_end{str.data()+str.size()}
+        {
+
+        }
+        constexpr StringView(std::string_view sv) 
+            : m_begin(sv.begin()), m_end(sv.end())
+        {
+
+        }
+#endif
 #if defined(USF_STD_BASIC_STRING_VIEW)
         template <typename Traits = std::char_traits<CharT>>
         constexpr BasicStringView(const USF_STD_BASIC_STRING_VIEW<CharT, Traits> view)
