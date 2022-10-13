@@ -300,6 +300,7 @@ Argument make_argument(const unsigned long int arg)
 #else // (__LONG_MAX__ != __LONG_LONG_MAX__)
 
 // 64 bit signed integer
+#ifdef USF_COMPILER_CLANG
 inline constexpr
 Argument make_argument(const long int arg)
 {
@@ -312,6 +313,8 @@ Argument make_argument(const unsigned long int arg)
 {
     return static_cast<uint64_t>(arg);
 }
+#endif
+
 #endif // (__LONG_MAX__ != __LONG_LONG_MAX__)
 
 // 64 bit signed integer
