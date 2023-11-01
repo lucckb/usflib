@@ -5,6 +5,7 @@
 // ----------------------------------------------------------------------------
 
 #pragma once
+#include <cstdint>
 
 namespace usf::internal::Integer
 {
