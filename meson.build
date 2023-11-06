@@ -15,9 +15,4 @@ usf_lib = static_library( 'usf', sources: usf_src,
     include_directories: usf_inc 
 )
 
-usf_lib_native = static_library( 'usf_native', sources: usf_src, 
-    include_directories: usf_inc, native: true
-)
-
 usf_dep = declare_dependency( link_with: usf_lib , include_directories: usf_inc)
-usf_native_dep = declare_dependency( link_with: usf_lib_native , include_directories: usf_inc)
