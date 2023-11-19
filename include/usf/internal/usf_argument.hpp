@@ -5,6 +5,7 @@
 // ----------------------------------------------------------------------------
 
 #pragma once
+#include <cstdint>
 
 namespace usf
 {
@@ -300,7 +301,7 @@ Argument make_argument(const unsigned long int arg)
 #else // (__LONG_MAX__ != __LONG_LONG_MAX__)
 
 // 64 bit signed integer
-#ifdef USF_COMPILER_CLANG
+#if defined(USF_COMPILER_CLANG) && !defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
 inline constexpr
 Argument make_argument(const long int arg)
 {
